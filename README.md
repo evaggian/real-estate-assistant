@@ -39,7 +39,7 @@ real-estate-assistant/
 
 ### Prerequisites
 
-- Python 3.8+
+- Python 3.12+
 - pip
 
 ### Backend Setup

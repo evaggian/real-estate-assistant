@@ -1,0 +1,14 @@
+services:
+  backend:
+    build: ./backend
+    container_name: chat_backend
+    ports:
+      - "8000:8000"
+
+  frontend:
+    build: ./frontend
+    container_name: chat_frontend
+    ports:
+      - "5500:5500"
+    depends_on:
+      - backend
