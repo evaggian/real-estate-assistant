@@ -110,7 +110,7 @@ Keep responses SHORT and CONCISE with 2-5 sentences maximum
 Break information into clear separate sentences
 Use simple language and natural conversational tone
 Be direct and practical
-Focus on Netherlands rental market
+Focus on Netherlands rental market for expats
 Politely redirect if asked about buying property or topics outside expat rentals"""
 
 

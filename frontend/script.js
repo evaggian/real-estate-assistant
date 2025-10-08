@@ -8,18 +8,36 @@ const input = document.getElementById("user-input");
 const sendBtn = document.getElementById("send-btn");
 const clearBtn = document.getElementById("clear-btn");
 const suggestions = document.getElementById("suggestions");
+const uploadSection = document.getElementById("upload-section");
+
+// Chat widget toggle
+const chatToggle = document.getElementById("chat-toggle");
+const chatWindow = document.getElementById("chat-window");
+const chatClose = document.getElementById("chat-close");
+
+chatToggle.addEventListener("click", () => {
+  chatWindow.classList.toggle("hidden");
+  chatToggle.classList.toggle("hidden");
+});
+
+chatClose.addEventListener("click", () => {
+  chatWindow.classList.add("hidden");
+  chatToggle.classList.remove("hidden");
+});
 
 // Restore chat history on page load
 window.addEventListener("load", () => {
   const saved = localStorage.getItem("chatHistory");
   if (saved) {
     chatBox.innerHTML = saved;
-    // Hide suggestions if there's existing chat
+    // Hide suggestions and upload if there's existing chat
     suggestions.style.display = "none";
+    uploadSection.style.display = "none";
   } else {
-    // Show welcome message and suggestions on first load
+    // Show welcome message, suggestions, and upload on first load
     showWelcomeMessage();
     suggestions.style.display = "flex";
+    uploadSection.style.display = "flex";
   }
 });
 
@@ -154,8 +172,9 @@ document.querySelectorAll(".suggestion-btn").forEach(btn => {
     const text = btn.textContent.trim();
     input.value = text;
     sendMessage();
-    // Hide suggestions after first use
+    // Hide suggestions and upload after first use
     suggestions.style.display = "none";
+    uploadSection.style.display = "none";
   });
 });
 
@@ -170,34 +189,23 @@ clearBtn.addEventListener("click", async () => {
     console.warn("Failed to reset backend:", err.message);
   }
 
-  // Show welcome message and suggestions again
+  // Show welcome message, suggestions, and upload again
   showWelcomeMessage();
   suggestions.style.display = "flex";
+  uploadSection.style.display = "flex";
 });
 
 // --- File Upload Feature ---
 const fileInput = document.getElementById("file-input");
-const fileName = document.getElementById("file-name");
-const uploadBtn = document.getElementById("upload-btn");
 
-// Update file name display when file is selected
-fileInput.addEventListener("change", () => {
-  if (fileInput.files.length > 0) {
-    fileName.textContent = fileInput.files[0].name;
-    uploadBtn.disabled = false;
-  } else {
-    fileName.textContent = "No file selected";
-    uploadBtn.disabled = true;
-  }
-});
-
-// Handle file upload and analysis
-uploadBtn.addEventListener("click", async () => {
+// Auto-upload and analyze when file is selected
+fileInput.addEventListener("change", async () => {
   const file = fileInput.files[0];
   if (!file) return;
 
-  // Hide suggestions on first interaction
+  // Hide suggestions and upload on first interaction
   suggestions.style.display = "none";
+  uploadSection.style.display = "none";
 
   const time = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 
@@ -257,8 +265,6 @@ uploadBtn.addEventListener("click", async () => {
 
     // Reset file input
     fileInput.value = "";
-    fileName.textContent = "No file selected";
-    uploadBtn.disabled = true;
 
   } catch (error) {
     typingIndicator.remove();
@@ -270,5 +276,8 @@ uploadBtn.addEventListener("click", async () => {
       </div>`;
 
     chatBox.scrollTop = chatBox.scrollHeight;
+
+    // Reset file input on error
+    fileInput.value = "";
   }
 });

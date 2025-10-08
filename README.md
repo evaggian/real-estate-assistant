@@ -8,13 +8,14 @@ A specialized AI assistant helping international professionals navigate the Dutc
 
 ## Table of Contents
 
-- [How to Build, Start, and Run](#how-to-build-start-and-run)
-- [Technologies Used](#technologies-used)
-- [Creative Choices](#creative-choices)
+- [Installation & Setup](#installation--setup)
+- [Technology Stack](#technology-stack)
+- [Design Decisions](#design-decisions)
+- [Screenshots](#screenshots)
 
 ---
 
-## How to Build, Start, and Run
+## Installation & Setup
 
 ### Prerequisites
 - Docker and Docker Compose installed
@@ -73,7 +74,7 @@ docker-compose -f docker-compose.test.yml build frontend-test
 
 ---
 
-## Technologies Used
+## Technology Stack
 
 ### Backend
 - **FastAPI** - REST API framework
@@ -94,7 +95,7 @@ docker-compose -f docker-compose.test.yml build frontend-test
 
 ---
 
-## Creative Choices
+## Design Decisions
 
 ### Project Concept
 
@@ -121,6 +122,11 @@ docker-compose -f docker-compose.test.yml build frontend-test
 - Red for scam warnings (danger/alert)
 - Disappear after first interaction to reduce clutter
 
+**Copy Button on Messages**
+- Each bot response includes a copy button (appears on hover)
+- Allows users to easily save important information like document lists, price ranges, or contract analysis
+- Shows checkmark confirmation when text is copied
+
 **Special Features for Expat Rental Market**
 1. **Price Fairness Checker** - Embedded 2024 market averages for major Dutch cities to validate rental prices
 2. **Document Checklist Generator** - Pre-loaded knowledge of Dutch rental requirements (BSN, residence permit, etc.)
@@ -137,7 +143,8 @@ docker-compose -f docker-compose.test.yml build frontend-test
 **Domain Specialization**
 - Custom system prompt laser-focused on expat rental scenarios only
 - Embedded static data (market prices, document lists) in backend config instead of using external APIs
-- Redirects off-topic queries back to rentals
+- Strict refusal protocol implemented: Assistant is instructed to politely decline unrelated questions (e.g., buying property, other countries, general topics) and redirect users back to Dutch rental housing
+- Limitation: Due to the smaller model size (0.5B parameters), the refusal protocol may not work consistently - the model occasionally responds to off-topic questions despite strict instructions
 
 **Dual Chat History**
 - Server-side: Maintains conversation context for AI continuity
@@ -167,5 +174,24 @@ real-estate-assistant/
 ├── version.txt             # Version tracking
 └── README.md               # Documentation
 ```
+
+---
+
+## Screenshots
+
+### Main Interface
+<img src="screenshots/main-interface.png" alt="Main Interface" width="600">
+
+*Bay's welcome message with color-coded quick suggestions for common expat questions*
+
+### Price Fairness Checker
+<img src="screenshots/price-checker.png" alt="Price Checker" width="600">
+
+*Real-time rental price validation against 2024 market averages for major Dutch cities*
+
+### Contract Upload & Analysis
+<img src="screenshots/contract-analysis.png" alt="Contract Analysis" width="600">
+
+*Upload rental contracts (PDF/TXT) for AI-powered analysis of key terms and red flags*
 
 ---
