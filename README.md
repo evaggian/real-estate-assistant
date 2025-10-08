@@ -163,14 +163,20 @@ real-estate-assistant/
 │   ├── requirements.txt    # Python dependencies
 │   └── Dockerfile          # Backend container
 ├── frontend/
-│   ├── index.html          # Chat interface
-│   ├── script.js           # Chat logic
+│   ├── index.html          # Chat interface with floating widget
+│   ├── script.js           # Chat logic & API integration
 │   ├── test_script.test.js # Frontend tests
 │   ├── package.json        # npm dependencies
 │   ├── jest.config.js      # Jest test configuration
 │   └── Dockerfile          # Frontend container
+├── screenshots/
+│   ├── main-interface.png
+│   ├── price-checker.png
+│   └── contract-analysis.png
 ├── docker-compose.yml      # Container orchestration
 ├── docker-compose.test.yml # Test configuration
+├── .dockerignore           # Docker build exclusions
+├── .gitignore              # Git exclusions
 ├── version.txt             # Version tracking
 └── README.md               # Documentation
 ```
