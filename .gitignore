@@ -5,5 +5,8 @@ __pycache__/
 # Virtual environment
 real-estate-assistant-venv/
 
+# Claude Code
+.claude/
+
 # OS
 .DS_Store

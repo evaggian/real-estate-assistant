@@ -6,3 +6,5 @@ accelerate
 sentencepiece
 pytest
 httpx
+python-multipart
+PyPDF2

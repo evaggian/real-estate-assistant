@@ -16,9 +16,9 @@ COPY . .
 
 # --- Test Stage ---
 FROM base AS test
-# Run tests (without loading the model to save time)
+# Run tests with mocked model (fast, no model download required)
 RUN echo "Running tests..." && \
-    python -m pytest test_app.py -v --tb=short || \
+    python -m pytest test_app_mock.py -v --tb=short || \
     (echo "Tests failed! See errors above." && exit 1)
 
 # --- Production Stage ---

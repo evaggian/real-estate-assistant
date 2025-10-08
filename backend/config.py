@@ -4,17 +4,20 @@ Centralized configuration for Expat Rental Assistant
 import os
 from pathlib import Path
 
-# Read version from root version.txt
-VERSION_FILE = Path(__file__).parent.parent / "version.txt"
-with open(VERSION_FILE, "r") as f:
-    VERSION = f.read().strip()
+# Read version from version.txt (try root first, then backend, fallback to hardcoded)
+VERSION = "1.0.0"  # Default fallback
+for version_path in [Path(__file__).parent.parent / "version.txt", Path(__file__).parent / "version.txt"]:
+    if version_path.exists():
+        with open(version_path, "r") as f:
+            VERSION = f.read().strip()
+        break
 
 # Application metadata
 APP_NAME = "Expat Rental Assistant API"
 APP_DESCRIPTION = "AI-powered chatbot for helping expats navigate the Dutch rental market"
 
 # Model configuration
-MODEL_NAME = os.getenv("MODEL_NAME", "Qwen/Qwen2.5-1.5B-Instruct")
+MODEL_NAME = os.getenv("MODEL_NAME", "Qwen/Qwen2.5-0.5B-Instruct")  # Smaller, faster model
 MAX_NEW_TOKENS = int(os.getenv("MAX_NEW_TOKENS", "150"))
 TEMPERATURE = float(os.getenv("TEMPERATURE", "0.7"))
 
@@ -58,6 +61,22 @@ SCAM_WARNINGS = [
     "Use official platforms like Funda Pararius Kamernet",
     "Watch for urgent pressure to pay immediately"
 ]
+
+# Contract analysis configuration
+CONTRACT_ANALYSIS_MAX_CHARS = 2000
+CONTRACT_ANALYSIS_PROMPT_TEMPLATE = """Analyze this Dutch rental contract and provide key information:
+
+Contract excerpt:
+{contract_text}
+
+Please identify and summarize:
+1. Rental price and what it includes (utilities, service costs, etc.)
+2. Contract duration and notice period
+3. Deposit amount
+4. Any unusual clauses or red flags
+5. Your overall assessment (fair/unfair/needs attention)
+
+Keep your response concise and focused on expat concerns."""
 
 # System prompt template
 SYSTEM_PROMPT_TEMPLATE = """You are an Expat Rental Assistant specialized in helping international professionals and families find rental properties in the Netherlands.
