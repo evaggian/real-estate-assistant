@@ -1,0 +1,14 @@
+{
+  "name": "expat-rental-assistant-frontend",
+  "version": "1.0.0",
+  "description": "Frontend for Expat Rental Assistant chatbot",
+  "scripts": {
+    "test": "jest --coverage",
+    "test:watch": "jest --watch"
+  },
+  "devDependencies": {
+    "@testing-library/dom": "^10.0.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0"
+  }
+}

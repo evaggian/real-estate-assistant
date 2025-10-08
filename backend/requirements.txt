@@ -2,3 +2,7 @@ fastapi
 uvicorn
 transformers
 torch
+accelerate
+sentencepiece
+pytest
+httpx

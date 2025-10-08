@@ -1,0 +1,12 @@
+services:
+  backend-test:
+    build:
+      context: ./backend
+      target: test
+    container_name: chat_backend_test
+
+  frontend-test:
+    build:
+      context: ./frontend
+      target: test
+    container_name: chat_frontend_test

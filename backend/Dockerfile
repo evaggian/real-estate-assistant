@@ -1,5 +1,5 @@
 # Use Python 3.12 on Debian Bookworm (newer stable) to reduce known vulnerabilities
-FROM python:3.12-slim-bookworm
+FROM python:3.12-slim-bookworm AS base
 
 # Update system packages to reduce vulnerabilities
 RUN apt-get update && apt-get upgrade -y && apt-get clean && rm -rf /var/lib/apt/lists/*
@@ -14,6 +14,15 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy source code
 COPY . .
 
+# --- Test Stage ---
+FROM base AS test
+# Run tests (without loading the model to save time)
+RUN echo "Running tests..." && \
+    python -m pytest test_app.py -v --tb=short || \
+    (echo "Tests failed! See errors above." && exit 1)
+
+# --- Production Stage ---
+FROM base AS production
 # Expose backend port
 EXPOSE 8000
 
